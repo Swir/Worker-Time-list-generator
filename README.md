@@ -1,73 +1,143 @@
-# Worker Time List Generator
+<div align="center">
 
-A Python desktop timesheet and work-hours calculator for recording shifts, customer/address details, breaks and total working time. The application can export the completed timesheet to PDF and convert PDF pages to JPG images.
+# ⏱️ Worker Time List Generator
 
-## Features
+### Desktop Timesheet & Work-Hours Calculator with PDF Export
 
-- Record work date, customer/address, start time and end time
-- Optional 30-minute break deduction
-- Automatic work-time calculation
-- Running total of worked hours and minutes
-- Export the work table to PDF
-- Custom PDF table header
-- Convert PDF pages to JPG
-- Tkinter desktop GUI
-- Two included versions: `worker v1.py` and `worker v2.py`
+**Python • Tkinter • Work Hours • Breaks • PDF • JPG • EN / NO**
 
-## Screens / data fields
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)
+![Tkinter](https://img.shields.io/badge/GUI-Tkinter-2ea44f)
+![PDF](https://img.shields.io/badge/Export-PDF-red)
+![PyMuPDF](https://img.shields.io/badge/PDF%20to-JPG-ff9800)
+![Languages](https://img.shields.io/badge/Languages-EN%20%7C%20NO-ff4fa3)
 
-The application works with the following fields:
+</div>
 
-- Date
-- Customer / Address
-- Start time
-- End time
-- Break
-- Working time
-- Total hours
+---
 
-The current V2 interface uses Norwegian labels such as `Dato`, `Kunde/Adresse`, `Starttid`, `Sluttid`, `Tok pause` and `Arbeidstid`.
+## 🚀 About
 
-## Requirements
+**Worker Time List Generator** is a Python desktop timesheet application for recording work dates, customer or address information, start/end times, breaks and total worked time.
 
-- Python 3
+The program automatically calculates shift duration, can subtract a 30-minute break, keeps a running total and exports the completed work table to PDF. It also includes a PDF-to-JPG conversion utility.
+
+The repository now contains a dedicated **English version** in addition to the original Norwegian-oriented versions.
+
+It is designed for users searching for a **Python timesheet app**, **work hours calculator**, **employee time tracker**, **Tkinter timesheet**, **work log PDF generator**, **timeliste app** or a lightweight offline work-hours tracker.
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|---|---|
+| 📅 Work-date entry | Record each shift date |
+| 📍 Customer / address | Save job or workplace information |
+| 🕒 Start & end times | Enter shift start and finish |
+| ☕ Break deduction | Optional 30-minute break subtraction |
+| 🧮 Automatic calculation | Calculates worked hours and minutes |
+| ➕ Running total | Shows total accumulated work time |
+| 📄 PDF export | Export the complete table to PDF |
+| 🏷️ Custom PDF title | Add employee name or custom table header |
+| 🖼️ PDF to JPG | Convert PDF pages into JPG images |
+| 💾 Ctrl+S | Quick PDF-save shortcut in the desktop app |
+| 🌍 English version | Dedicated `worker_v2_EN.py` build |
+
+---
+
+## 🌍 Versions
+
+| Version | Language / Purpose |
+|---|---|
+| `worker_v2_EN.py` | 🇬🇧 Full English version |
+| `worker v2.py` | 🇳🇴 Norwegian-oriented V2 |
+| `worker v1.py` | Legacy / decimal-time variant |
+
+---
+
+## 📋 Requirements
+
+- Python 3.x
 - Tkinter
 - Pillow
 - ReportLab
 - PyMuPDF
 
-Install the Python dependencies:
+Install dependencies:
 
 ```bash
 pip install Pillow reportlab PyMuPDF
 ```
 
-## Run
+---
 
-Clone or download the repository, then start one of the versions:
+## 📦 Installation
+
+```bash
+git clone https://github.com/Swir/Worker-Time-list-generator.git
+cd Worker-Time-list-generator
+pip install Pillow reportlab PyMuPDF
+```
+
+Run the English version:
+
+```bash
+python worker_v2_EN.py
+```
+
+Run the original V2:
 
 ```bash
 python "worker v2.py"
 ```
 
-or:
+---
 
-```bash
-python "worker v1.py"
+## 🧠 Work-Time Example
+
+```text
+Start: 07:00
+End:   15:30
+Break: 30 minutes
+-----------------
+Work:  8:00
 ```
 
-## PDF export
+The English version also handles shifts that cross midnight.
 
-The program can save the entered work table and total working time as a PDF document. V2 can also open a PDF and export each page as a JPG image.
+---
 
-## Use cases
+## 📄 PDF Workflow
 
-Useful for employees, contractors and small teams that need a simple desktop work-hours log without a web service or account.
+```text
+Work entries
+     │
+     ▼
+Timesheet table
+     │
+     ▼
+PDF export
+     │
+     └────► optional PDF → JPG conversion
+```
 
-## Search keywords
+---
 
-`python timesheet` `work hours calculator` `employee timesheet` `working time tracker` `tkinter timesheet` `work time calculator python` `timesheet pdf export` `work hours pdf` `norwegian timesheet` `arbeidstid` `timeliste` `python desktop app`
+## 🔍 Discoverability
 
-## Author
+`python timesheet` • `work hours calculator` • `employee timesheet app` • `work time tracker python` • `tkinter timesheet` • `timesheet pdf export` • `work log generator` • `working hours calculator` • `timeliste python` • `arbeidstid app` • `offline timesheet`
 
-Created by Swir.
+---
+
+## 👨‍💻 Author
+
+Developed by **Swir** — [@Swir](https://github.com/Swir)
+
+<div align="center">
+
+### ⏱️ Track the shift. Calculate the hours. Export the PDF.
+
+⭐ **Star the repository if it helps with your work logs!**
+
+</div>
