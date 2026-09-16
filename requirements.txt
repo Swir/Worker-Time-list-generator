@@ -1,0 +1,5 @@
+Pillow>=11,<13
+reportlab>=4.2,<5
+PyMuPDF>=1.24,<2
+ttkbootstrap>=1.10,<2
+platformdirs>=4.3,<5

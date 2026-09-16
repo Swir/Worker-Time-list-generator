@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "swir-worker-time-list-generator"
+version = "3.0.0"
+description = "Multilingual desktop timesheet and work-hours generator with PDF/CSV export"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{name = "Swir"}]
+dependencies = ["Pillow>=11,<13", "reportlab>=4.2,<5", "PyMuPDF>=1.24,<2", "ttkbootstrap>=1.10,<2", "platformdirs>=4.3,<5"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<9"]
+
+[project.scripts]
+worker-time-list = "worker_time_list.app:run"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
