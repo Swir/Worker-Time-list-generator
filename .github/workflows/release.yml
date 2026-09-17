@@ -26,6 +26,7 @@ jobs:
           pip install -e ".[test]" pyinstaller
           pytest -q
           python tools/build_icon.py
+          python main.py --smoke-gui
       - name: Resolve version
         shell: pwsh
         run: |
@@ -42,15 +43,19 @@ jobs:
             --collect-all ttkbootstrap `
             --collect-all reportlab `
             --collect-all pymupdf `
+            --add-data "assets/worker-time-list.ico;assets" `
+            --add-data "assets/worker-time-list.png;assets" `
             --add-data "assets/worker-time-list.svg;assets" `
             main.py
-      - name: Smoke test
+      - name: Packaged smoke tests
         shell: pwsh
         run: |
           if (!(Test-Path "dist/WorkerTimeList.exe")) { throw "EXE missing" }
           if ((Get-Item "dist/WorkerTimeList.exe").Length -lt 1000000) { throw "EXE unexpectedly small" }
-          $process = Start-Process -FilePath ".\dist\WorkerTimeList.exe" -ArgumentList "--version" -Wait -PassThru
-          if ($process.ExitCode -ne 0) { throw "Version smoke test failed" }
+          $versionProcess = Start-Process -FilePath ".\dist\WorkerTimeList.exe" -ArgumentList "--version" -Wait -PassThru
+          if ($versionProcess.ExitCode -ne 0) { throw "Version smoke test failed" }
+          $guiProcess = Start-Process -FilePath ".\dist\WorkerTimeList.exe" -ArgumentList "--smoke-gui" -Wait -PassThru
+          if ($guiProcess.ExitCode -ne 0) { throw "Packaged GUI smoke test failed" }
       - name: Package and checksum
         shell: pwsh
         run: |

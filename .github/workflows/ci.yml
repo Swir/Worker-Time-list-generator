@@ -26,3 +26,18 @@ jobs:
       - run: pip install -e ".[test]"
       - run: pytest -q
       - run: python -m compileall -q src main.py
+
+  windows-gui-smoke:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[test]"
+          python tools/build_icon.py
+          python main.py --smoke-gui
