@@ -17,6 +17,7 @@ APP_AUTHOR = "Swir"
 @dataclass(slots=True)
 class AppState:
     employee: str
+    pdf_title: str
     language: str
     entries: list[WorkEntry]
 
@@ -34,22 +35,33 @@ def state_path() -> Path:
 def load_state(default_language: str = "en") -> AppState:
     path = state_path()
     if not path.exists():
-        return AppState("", default_language, [])
+        return AppState("", "", default_language, [])
     try:
         payload = json.loads(path.read_text(encoding="utf-8"))
         entries = [WorkEntry.from_dict(item) for item in payload.get("entries", [])]
-        return AppState(str(payload.get("employee", "")), str(payload.get("language", default_language)), entries)
+        employee = str(payload.get("employee", ""))
+        # v3.0 used the employee field as the PDF title. Preserve that value as a
+        # sensible fallback while giving v3.1 a dedicated, optional table title.
+        pdf_title = str(payload.get("pdf_title", payload.get("table_header", "")))
+        language = str(payload.get("language", default_language))
+        return AppState(employee, pdf_title, language, entries)
     except Exception:
         backup = path.with_suffix(".broken.json")
         try:
             path.replace(backup)
         except OSError:
             pass
-        return AppState("", default_language, [])
+        return AppState("", "", default_language, [])
 
 
 def save_state(state: AppState) -> None:
-    payload = {"schema": 1, "employee": state.employee.strip(), "language": state.language, "entries": [entry.to_dict() for entry in state.entries]}
+    payload = {
+        "schema": 2,
+        "employee": state.employee.strip(),
+        "pdf_title": state.pdf_title.strip(),
+        "language": state.language,
+        "entries": [entry.to_dict() for entry in state.entries],
+    }
     path = state_path()
     tmp = path.with_suffix(".tmp")
     tmp.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -61,7 +73,15 @@ def export_csv(path: str | Path, entries: Iterable[WorkEntry]) -> None:
         writer = csv.DictWriter(handle, fieldnames=("work_date", "client", "start", "end", "break_minutes", "duration", "note"))
         writer.writeheader()
         for entry in entries:
-            writer.writerow({"work_date": entry.work_date, "client": entry.client, "start": entry.start, "end": entry.end, "break_minutes": entry.break_minutes, "duration": entry.duration_hhmm, "note": entry.note})
+            writer.writerow({
+                "work_date": entry.work_date,
+                "client": entry.client,
+                "start": entry.start,
+                "end": entry.end,
+                "break_minutes": entry.break_minutes,
+                "duration": entry.duration_hhmm,
+                "note": entry.note,
+            })
 
 
 def import_csv(path: str | Path) -> list[WorkEntry]:
@@ -71,5 +91,14 @@ def import_csv(path: str | Path) -> list[WorkEntry]:
         for row in reader:
             if not row:
                 continue
-            items.append(WorkEntry(work_date=row.get("work_date") or row.get("date") or "", client=row.get("client") or row.get("customer") or "", start=row.get("start") or "", end=row.get("end") or "", break_minutes=int(row.get("break_minutes") or row.get("break") or 0), note=row.get("note") or ""))
+            items.append(
+                WorkEntry(
+                    work_date=row.get("work_date") or row.get("date") or "",
+                    client=row.get("client") or row.get("customer") or "",
+                    start=row.get("start") or "",
+                    end=row.get("end") or "",
+                    break_minutes=int(row.get("break_minutes") or row.get("break") or 0),
+                    note=row.get("note") or "",
+                )
+            )
     return items
