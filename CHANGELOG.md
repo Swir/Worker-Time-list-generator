@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.1.0 - 2026-09-17
+
+### Regression fixes
+- Restored the classic undo workflow and added `Ctrl+Z` history for add/update/delete/duplicate/import operations.
+- Restored a dedicated PDF/table title instead of overloading the employee field.
+- Restored the classic quick total-hours dialog.
+- Restored PDF-to-JPG conversion while keeping the newer PNG export.
+- Kept existing v3.0 state files compatible through automatic schema migration.
+
+### Improved
+- Added localized PDF headers for Polish, Norwegian and English.
+- Added the custom application icon to the README and Windows GUI runtime assets.
+- Added an offline GUI smoke mode, Windows GUI CI and packaged EXE GUI smoke testing.
+- Updated icon tooling to generate both ICO and PNG artwork from the same design.
+
 ## 3.0.0 - 2026-09-17
 
 ### Changed
